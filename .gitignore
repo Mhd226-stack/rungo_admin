@@ -20,3 +20,4 @@ yarn-error.log
 "storage/framework/views/" 
 "storage/logs/" 
 "tyt_tagxi.xlsx" 
+"storage/logs/laravel.log" 
