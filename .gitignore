@@ -1,0 +1,22 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+".env"  echo "vendor/"  echo "node_modules/"  git add .gitignore
+".env" 
+"vendor/" 
+"node_modules/" 
+"storage/framework/views/" 
+"storage/logs/" 
+"tyt_tagxi.xlsx" 

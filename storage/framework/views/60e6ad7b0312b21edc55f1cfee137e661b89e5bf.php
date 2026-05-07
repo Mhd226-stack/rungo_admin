@@ -1,0 +1,618 @@
+<?php $__env->startSection('title', 'Main page'); ?>
+
+
+<?php $__env->startSection('content'); ?>
+<?php
+    $zone_a_raw = $zone_price->zone_a ? explode(',', $zone_price->zone_a) : [];
+    $zone_a = [$zone_a_raw[0] ?? '0', $zone_a_raw[1] ?? '0', $zone_a_raw[2] ?? '0'];
+
+    $zone_b_raw = $zone_price->zone_b ? explode(',', $zone_price->zone_b) : [];
+    $zone_b = [$zone_b_raw[0] ?? '0', $zone_b_raw[1] ?? '0', $zone_b_raw[2] ?? '0'];
+
+    $zone_c_raw = $zone_price->zone_c ? explode(',', $zone_price->zone_c) : [];
+    $zone_c = [$zone_c_raw[0] ?? '0', $zone_c_raw[1] ?? '0', $zone_c_raw[2] ?? '0'];
+?>
+    <!-- Start Page content -->
+    <div class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box">
+
+
+                        <div class="box-header with-border">
+                            <a href="<?php echo e(url()->previous()); ?>">
+                                <button class="btn btn-danger btn-sm pull-right" type="submit">
+                                    <i class="mdi mdi-keyboard-backspace mr-2"></i>
+                                    <?php echo app('translator')->get('view_pages.back'); ?>
+                                </button>
+                            </a>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <form method="post" action="<?php echo e(url('vehicle_fare/update', $zone_price->id)); ?>">
+                                <?php echo csrf_field(); ?>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="admin_id"><?php echo app('translator')->get('view_pages.select_zone'); ?>
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <select name="zone" id="zone" class="form-control" disabled required>
+                                                <option value="<?php echo e($zone_price->zoneType->zone->id); ?>"
+                                                        disabledi><?php echo e($zone_price->zoneType->zone->name); ?></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="type"><?php echo app('translator')->get('view_pages.select_type'); ?>
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <select name="type" id="type" class="form-control" disabled required>
+                                                <option
+                                                    value="<?php echo e($zone_price->zoneType->vehicleType->id); ?>"><?php echo e($zone_price->zoneType->vehicleType->name); ?></option>
+                                            </select>
+                                        </div>
+                                        <span class="text-danger"><?php echo e($errors->first('type')); ?></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="admin_commision_type"><?php echo app('translator')->get('view_pages.admin_commision_type'); ?>
+                                                <span class="text-danger">*</span></label>
+                                            <select name="admin_commision_type" id="admin_commision_type"
+                                                    class="form-control" required>
+                                                <option
+                                                    value="2" <?php echo e(old('admin_commision_type',$zone_price->zoneType->admin_commision_type) == '2' ? 'selected' : ''); ?>><?php echo app('translator')->get('view_pages.fixed'); ?></option>
+                                                <option
+                                                    value="1" <?php echo e(old('admin_commision_type',$zone_price->zoneType->admin_commision_type) == '1' ? 'selected' : ''); ?>><?php echo app('translator')->get('view_pages.percentage'); ?></option>
+                                                option>
+                                            </select>
+                                            <span
+                                                class="text-danger"><?php echo e($errors->first('admin_commision_type')); ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="admin_commision"><?php echo app('translator')->get('view_pages.admin_commision'); ?><span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" id="admin_commision"
+                                                   name="admin_commision"
+                                                   value="<?php echo e(old('admin_commision',$zone_price->zoneType->admin_commision)); ?>"
+                                                   required=""
+                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.admin_commision'); ?>">
+                                            <span class="text-danger"><?php echo e($errors->first('admin_commision')); ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="service_tax"><?php echo app('translator')->get('view_pages.service_tax_in_percentage'); ?><span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" id="service_tax" name="service_tax"
+                                                   value="<?php echo e(old('service_tax',$zone_price->zoneType->service_tax)); ?>"
+                                                   required=""
+                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.service_tax'); ?>">
+                                            <span class="text-danger"><?php echo e($errors->first('service_tax')); ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group" style="padding-right: 30px;">
+                                            <label for="payment_type"><?php echo app('translator')->get('view_pages.payment_type'); ?>
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <?php
+                                                $card = $cash = $wallet = '';
+                                            ?>
+                                            <?php if(old('payment_type')): ?>
+                                                <?php $__currentLoopData = old('payment_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php if($item == 'card'): ?>
+                                                        <?php
+                                                            $card = 'selected';
+                                                        ?>
+                                                    <?php elseif($item == 'cash'): ?>
+                                                        <?php
+                                                            $cash = 'selected';
+                                                        ?>
+                                                    <?php elseif($item == 'wallet'): ?>
+                                                        <?php
+                                                            $wallet = 'selected';
+                                                        ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php else: ?>
+                                                <?php
+                                                    $paymentType = explode(',',$zone_price->zoneType->payment_type);
+                                                ?>
+                                                <?php $__currentLoopData = $paymentType; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php if($val == 'card'): ?>
+                                                        <?php
+                                                            $card = 'selected';
+                                                        ?>
+                                                    <?php elseif($val == 'cash'): ?>
+                                                        <?php
+                                                            $cash = 'selected';
+                                                        ?>
+                                                    <?php elseif($val == 'wallet'): ?>
+                                                        <?php
+                                                            $wallet = 'selected';
+                                                        ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endif; ?>
+                                            <select name="payment_type[]" id="payment_type" class="form-control select2"
+                                                    multiple="multiple"
+                                                    data-placeholder="<?php echo app('translator')->get('view_pages.select'); ?> <?php echo app('translator')->get('view_pages.payment_type'); ?>"
+                                                    required>
+                                                <option value="cash" <?php echo e($cash); ?>><?php echo app('translator')->get('view_pages.cash'); ?></option>
+                                                <option value="card" <?php echo e($card); ?>><?php echo app('translator')->get('view_pages.card'); ?></option>
+                                                <option value="wallet" <?php echo e($wallet); ?>><?php echo app('translator')->get('view_pages.wallet'); ?></option>
+                                            </select>
+                                        </div>
+                                        <span class="text-danger"><?php echo e($errors->first('payment_type')); ?></span>
+                                    </div>
+                                </div>
+
+                            <!--  <div class="row">
+                        <div class="col-sm-6" >
+                          <div class="form-group">
+                                <label for="admin_commision_taken_from"><?php echo app('translator')->get('view_pages.admin_commision_taken_from'); ?><span class="text-danger">*</span></label>
+                                <select name="admin_commision_taken_from" id="admin_commision_taken_from" class="form-control" required>
+                              <option
+                                value="user" <?php echo e(old('admin_commision_taken_from',$zone_price->zoneType->admin_commision_taken_from) == 'user' ? 'selected' : ''); ?>><?php echo app('translator')->get('view_pages.user'); ?></option>
+                                <option
+                                value="driver" <?php echo e(old('admin_commision_taken_from',$zone_price->zoneType->admin_commision_taken_from) == 'driver' ? 'selected' : ''); ?>><?php echo app('translator')->get('view_pages.driver'); ?></option>
+                                    </select>
+                                <span class="text-danger"><?php echo e($errors->first('admin_commision_taken_from')); ?></span>
+                            </div>
+                        </div>
+                       </div>  -->
+
+                                <?php if($zone_price->price_type == 1): ?>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h2 class="fw-medium fs-base me-auto">
+                                                Ride Now
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <div class="row ml-2 mr-2">
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <label for="ride_now_base_price"
+                                                   class="form-label"><?php echo app('translator')->get('view_pages.base_price'); ?>
+                                                (<?php echo app('translator')->get('view_pages.kilometer'); ?>)</label>
+                                            <input type="hidden" id="price_type" name="price_type" value="RIDENOW">
+                                            <input id="ride_now_base_price" name="ride_now_base_price"
+                                                   value="<?php echo e(old('ride_now_base_price', $zone_price->base_price)); ?>"
+                                                   type="text" class="form-control w-full"
+                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.base_price'); ?>"
+                                                   required>
+                                            <span class="text-danger"><?php echo e($errors->first('ride_now_base_price')); ?></span>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <label for="price_per_distance"
+                                                   class="form-label"><?php echo app('translator')->get('view_pages.price_per_distance'); ?>
+                                                (<?php echo app('translator')->get('view_pages.kilometer'); ?>)</label>
+                                            <input id="ride_now_price_per_distance" name="ride_now_price_per_distance"
+                                                   value="<?php echo e(old('ride_now_price_per_distance', $zone_price->price_per_distance)); ?>"
+                                                   type="text" class="form-control w-full"
+                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.price_per_distance'); ?>"
+                                                   required>
+                                            <span
+                                                class="text-danger"><?php echo e($errors->first('ride_now_price_per_distance')); ?></span>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <label for="base_distance"
+                                                   class="form-label"><?php echo app('translator')->get('view_pages.base_distance'); ?></label>
+                                            <input id="ride_now_base_distance" name="ride_now_base_distance"
+                                                   value="<?php echo e(old('ride_now_base_distance', $zone_price->base_distance)); ?>"
+                                                   type="" min="0" class="form-control w-full"
+                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.base_distance'); ?>"
+                                                   required>
+                                            <span
+                                                class="text-danger"><?php echo e($errors->first('ride_now_base_distance')); ?></span>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <label for="price_per_time"
+                                                   class="form-label"><?php echo app('translator')->get('view_pages.price_per_time'); ?>
+                                                (minutes)</label>
+                                            <input id="ride_now_price_per_time" name="ride_now_price_per_time"
+                                                   value="<?php echo e(old('ride_now_price_per_time', $zone_price->price_per_time)); ?>"
+                                                   type="text" class="form-control w-full"
+                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.price_per_time'); ?>"
+                                                   required>
+                                            <span
+                                                class="text-danger"><?php echo e($errors->first('ride_now_price_per_time')); ?></span>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <label for="cancellation_fee"
+                                                   class="form-label"><?php echo app('translator')->get('view_pages.cancellation_fee'); ?></label>
+                                            <input id="ride_now_cancellation_fee" name="ride_now_cancellation_fee"
+                                                   value="<?php echo e(old('ride_now_cancellation_fee', $zone_price->cancellation_fee)); ?>"
+                                                   type="text" class="form-control w-full"
+                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.cancellation_fee'); ?>"
+                                                   required>
+                                            <span
+                                                class="text-danger"><?php echo e($errors->first('ride_now_cancellation_fee')); ?></span>
+                                        </div>
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <div class="form-group">
+                                                <label for="waiting_charge"><?php echo app('translator')->get('view_pages.waiting_charge'); ?><span
+                                                        class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" id="ride_now_waiting_charge"
+                                                       name="ride_now_waiting_charge"
+                                                       value="<?php echo e(old('ride_now_waiting_charge',$zone_price->waiting_charge)); ?>"
+                                                       required=""
+                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.waiting_charge'); ?>">
+                                                <span
+                                                    class="text-danger"><?php echo e($errors->first('ride_now_waiting_charge')); ?></span>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <div class="form-group">
+                                                <label
+                                                    for="free_waiting_time_in_mins_before_trip_start"><?php echo app('translator')->get('view_pages.free_waiting_time_in_mins_before_trip_start'); ?>
+                                                    <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text"
+                                                       id="ride_now_free_waiting_time_in_mins_before_trip_start"
+                                                       name="ride_now_free_waiting_time_in_mins_before_trip_start"
+                                                       value="<?php echo e(old('ride_now_free_waiting_time_in_mins_before_trip_start',$zone_price->free_waiting_time_in_mins_before_trip_start)); ?>"
+                                                       required=""
+                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.free_waiting_time_in_mins_before_trip_start'); ?>">
+                                                <span
+                                                    class="text-danger"><?php echo e($errors->first('ride_now_free_waiting_time_in_mins_before_trip_start')); ?></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6 mt-4">
+                                            <div class="form-group">
+                                                <label
+                                                    for="free_waiting_time_in_mins_after_trip_start"><?php echo app('translator')->get('view_pages.free_waiting_time_in_mins_after_trip_start'); ?>
+                                                    <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text"
+                                                       id="ride_now_free_waiting_time_in_mins_after_trip_start"
+                                                       name="ride_now_free_waiting_time_in_mins_after_trip_start"
+                                                       value="<?php echo e(old('ride_now_free_waiting_time_in_mins_after_trip_start',$zone_price->free_waiting_time_in_mins_after_trip_start)); ?>"
+                                                       required=""
+                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.free_waiting_time_in_mins_after_trip_start'); ?>">
+                                                <span
+                                                    class="text-danger"><?php echo e($errors->first('ride_now_free_waiting_time_in_mins_after_trip_start')); ?></span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <?php else: ?>
+                                        <!-- <div class="col-sm-12"> -->
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h2 class="fw-medium fs-base me-auto">
+                                                        Ride Later
+                                                    </h2>
+                                                </div>
+                                                <div class="row ml-2 mr-2">
+                                                    <div class="col-12 col-lg-6 mt-4">
+                                                        <label for="ride_later_base_price"
+                                                               class="form-label"><?php echo app('translator')->get('view_pages.base_price'); ?>
+                                                            (<?php echo app('translator')->get('view_pages.kilometer'); ?>)</label>
+                                                        <input type="hidden" id="price_type" name="price_type"
+                                                               value="RIDELATER">
+                                                        <input id="ride_later_base_price" name="ride_later_base_price"
+                                                               value="<?php echo e(old('ride_later_base_price', $zone_price->base_price)); ?>"
+                                                               type="text" class="form-control w-full"
+                                                               placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.base_price'); ?>"
+                                                               required>
+                                                        <span
+                                                            class="text-danger"><?php echo e($errors->first('ride_later_base_price')); ?></span>
+                                                    </div>
+
+                                                    <div class="col-12 col-lg-6 mt-4">
+                                                        <label for="price_per_distance"
+                                                               class="form-label"><?php echo app('translator')->get('view_pages.price_per_distance'); ?>
+                                                            (<?php echo app('translator')->get('view_pages.kilometer'); ?>)</label>
+                                                        <input id="ride_later_price_per_distance"
+                                                               name="ride_later_price_per_distance"
+                                                               value="<?php echo e(old('ride_later_price_per_distance', $zone_price->price_per_distance)); ?>"
+                                                               type="text" class="form-control w-full"
+                                                               placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.price_per_distance'); ?>"
+                                                               required>
+                                                        <span
+                                                            class="text-danger"><?php echo e($errors->first('ride_later_price_per_distance')); ?></span>
+                                                    </div>
+
+                                                    <div class="col-12 col-lg-6 mt-4">
+                                                        <label for="base_distance"
+                                                               class="form-label"><?php echo app('translator')->get('view_pages.base_distance'); ?></label>
+                                                        <input id="ride_later_base_distance"
+                                                               name="ride_later_base_distance"
+                                                               value="<?php echo e(old('ride_later_base_distance', $zone_price->base_distance)); ?>"
+                                                               type="" min="0" class="form-control w-full"
+                                                               placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.base_distance'); ?>"
+                                                               required>
+                                                        <span
+                                                            class="text-danger"><?php echo e($errors->first('ride_later_base_distance')); ?></span>
+                                                    </div>
+
+                                                    <div class="col-12 col-lg-6 mt-4">
+                                                        <label for="price_per_time"
+                                                               class="form-label"><?php echo app('translator')->get('view_pages.price_per_time'); ?>
+                                                            (minutes)</label>
+                                                        <input id="ride_later_price_per_time"
+                                                               name="ride_later_price_per_time"
+                                                               value="<?php echo e(old('ride_later_price_per_time', $zone_price->price_per_time)); ?>"
+                                                               type="text" class="form-control w-full"
+                                                               placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.price_per_time'); ?>"
+                                                               required>
+                                                        <span
+                                                            class="text-danger"><?php echo e($errors->first('ride_later_price_per_time')); ?></span>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <label for="cancellation_fee"
+                                                               class="form-label"><?php echo app('translator')->get('view_pages.cancellation_fee'); ?></label>
+                                                        <input id="ride_later_cancellation_fee"
+                                                               name="ride_later_cancellation_fee"
+                                                               value="<?php echo e(old('ride_later_cancellation_fee', $zone_price->cancellation_fee)); ?>"
+                                                               type="text" class="form-control w-full"
+                                                               placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.cancellation_fee'); ?>"
+                                                               required>
+                                                        <span
+                                                            class="text-danger"><?php echo e($errors->first('ride_later_cancellation_fee')); ?></span>
+                                                    </div>
+                                                    <div class="col-12 col-lg-6 mt-4">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="waiting_charge"><?php echo app('translator')->get('view_pages.waiting_charge'); ?>
+                                                                <span class="text-danger">*</span></label>
+                                                            <input class="form-control" type="text"
+                                                                   id="ride_later_waiting_charge"
+                                                                   name="ride_later_waiting_charge"
+                                                                   value="<?php echo e(old('ride_later_waiting_charge', $zone_price->waiting_charge)); ?>"
+                                                                   required=""
+                                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.waiting_charge'); ?>">
+                                                            <span
+                                                                class="text-danger"><?php echo e($errors->first('ride_now_waiting_charge')); ?></span>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-lg-6 mt-4">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="free_waiting_time_in_mins_before_trip_start"><?php echo app('translator')->get('view_pages.free_waiting_time_in_mins_before_trip_start'); ?>
+                                                                <span class="text-danger">*</span></label>
+                                                            <input class="form-control" type="text"
+                                                                   id="ride_later_free_waiting_time_in_mins_before_trip_start"
+                                                                   name="ride_later_free_waiting_time_in_mins_before_trip_start"
+                                                                   value="<?php echo e(old('ride_later_free_waiting_time_in_mins_before_trip_start',$zone_price->free_waiting_time_in_mins_before_trip_start)); ?>"
+                                                                   required=""
+                                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.free_waiting_time_in_mins_before_trip_start'); ?>">
+                                                            <span
+                                                                class="text-danger"><?php echo e($errors->first('ride_later_free_waiting_time_in_mins_before_trip_start')); ?></span>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-lg-6 mt-4">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="free_waiting_time_in_mins_after_trip_start"><?php echo app('translator')->get('view_pages.free_waiting_time_in_mins_after_trip_start'); ?>
+                                                                <span class="text-danger">*</span></label>
+                                                            <input class="form-control" type="text"
+                                                                   id="ride_later_free_waiting_time_in_mins_after_trip_start"
+                                                                   name="ride_later_free_waiting_time_in_mins_after_trip_start"
+                                                                   value="<?php echo e(old('ride_later_free_waiting_time_in_mins_after_trip_start',$zone_price->free_waiting_time_in_mins_after_trip_start)); ?>"
+                                                                   required=""
+                                                                   placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.free_waiting_time_in_mins_after_trip_start'); ?>">
+                                                            <span
+                                                                class="text-danger"><?php echo e($errors->first('ride_later_free_waiting_time_in_mins_after_trip_start')); ?></span>
+
+                                                        </div>
+                                                    </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+
+
+                                    
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="box box-solid box-info">
+                                                <div class="box-header with-border">
+                                                    <h4 class="box-title"><?php echo app('translator')->get('view_pages.zone_a'); ?></h4>
+                                                </div>
+
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="base_price"><?php echo app('translator')->get('view_pages.zone_a'); ?>&nbsp
+                                                                    (<?php echo app('translator')->get('view_pages.start_point'); ?>) (km) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_a_start_point" name="zone_a_start_point"
+                                                                       value="<?php echo e(old('zone_a_start_point',$zone_a[0])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.start_point'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_a_start_point')); ?></span>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="price_per_distance"><?php echo app('translator')->get('view_pages.zone_a'); ?>
+                                                                    &nbsp (<?php echo app('translator')->get('view_pages.end_point'); ?>) (km) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_a_end_point" name="zone_a_end_point"
+                                                                       value="<?php echo e(old('zone_a_end_point',$zone_a[1])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.end_point'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_a_end_point')); ?></span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="price_per_distance"><?php echo app('translator')->get('view_pages.zone_a'); ?>
+                                                                    &nbsp (<?php echo app('translator')->get('view_pages.charge'); ?>) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_a_charge" name="zone_a_charge"
+                                                                       value="<?php echo e(old('zone_a_charge',$zone_a[2])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.charge'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_a_charge')); ?></span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="box box-solid box-info">
+                                                <div class="box-header with-border">
+                                                    <h4 class="box-title"><?php echo app('translator')->get('view_pages.zone_b'); ?></h4>
+                                                </div>
+
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="base_price"><?php echo app('translator')->get('view_pages.zone_b'); ?>&nbsp
+                                                                    (<?php echo app('translator')->get('view_pages.start_point'); ?>) (km) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_b_start_point" name="zone_b_start_point"
+                                                                       value="<?php echo e(old('zone_b_start_point',$zone_b[0])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.start_point'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_b_start_point')); ?></span>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="price_per_distance"><?php echo app('translator')->get('view_pages.zone_b'); ?>
+                                                                    &nbsp (<?php echo app('translator')->get('view_pages.end_point'); ?>) (km) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_b_end_point" name="zone_b_end_point"
+                                                                       value="<?php echo e(old('zone_b_end_point',$zone_b[1])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.end_point'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_b_end_point')); ?></span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="price_per_distance"><?php echo app('translator')->get('view_pages.zone_b'); ?>
+                                                                    &nbsp (<?php echo app('translator')->get('view_pages.charge'); ?>) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_b_charge" name="zone_b_charge"
+                                                                       value="<?php echo e(old('zone_b_charge',$zone_b[2])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.charge'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_b_charge')); ?></span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="box box-solid box-info">
+                                                <div class="box-header with-border">
+                                                    <h4 class="box-title"><?php echo app('translator')->get('view_pages.zone_c'); ?></h4>
+                                                </div>
+
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="base_price"><?php echo app('translator')->get('view_pages.zone_c'); ?>&nbsp
+                                                                    (<?php echo app('translator')->get('view_pages.start_point'); ?>) (km) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_c_start_point" name="zone_c_start_point"
+                                                                       value="<?php echo e(old('zone_c_start_point',$zone_c[0])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.start_point'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_b_start_point')); ?></span>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="price_per_distance"><?php echo app('translator')->get('view_pages.zone_c'); ?>
+                                                                    &nbsp (<?php echo app('translator')->get('view_pages.end_point'); ?>) (km) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_c_end_point" name="zone_c_end_point"
+                                                                       value="<?php echo e(old('zone_c_end_point',$zone_c[1])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.end_point'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_b_end_point')); ?></span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="price_per_distance"><?php echo app('translator')->get('view_pages.zone_c'); ?>
+                                                                    &nbsp (<?php echo app('translator')->get('view_pages.charge'); ?>) <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text"
+                                                                       id="zone_c_charge" name="zone_c_charge"
+                                                                       value="<?php echo e(old('zone_c_charge',$zone_c[2])); ?>" required=""
+                                                                       placeholder="<?php echo app('translator')->get('view_pages.enter'); ?> <?php echo app('translator')->get('view_pages.charge'); ?>">
+                                                                <span
+                                                                    class="text-danger"><?php echo e($errors->first('zone_c_charge')); ?></span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="submit"
+                                                class="btn btn-primary btn-sm pull-right m-5"><?php echo e(__('view_pages.save')); ?></button>
+                                    </div>
+                            </form>
+
+                            <!-- END: Form Layout -->
+                        </div>
+                    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\taxi\resources\views/admin/vehicle_fare/edit.blade.php ENDPATH**/ ?>
