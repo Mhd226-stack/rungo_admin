@@ -327,6 +327,9 @@ if(str_contains((string)request()->path(),'translations')){
               <a href="<?php echo e(url('withdrawal-requests-lists/negative_balance_drivers')); ?>"><i class="fa fa-circle-thin"></i><?php echo app('translator')->get('pages_names.negative_balance_drivers'); ?></a>
             </li>
             <?php endif; ?>
+            <li class="<?php echo e('subscriptions' == $sub_menu ? 'active' : ''); ?>">
+              <a href="<?php echo e(url('/subscriptions')); ?>"><i class="fa fa-id-card"></i> Abonnements</a>
+            </li>
           </ul>
 
         </li>

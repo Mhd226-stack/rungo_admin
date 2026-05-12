@@ -749,6 +749,14 @@ Route::middleware('auth:web')->namespace('Admin')->group(function () {
             Route::get('/get-chat-messages', 'ChatController@get_chat_messages');
             Route::get('/get-notication-count', 'ChatController@get_notication_count');
             Route::get('/check_new_data_exist', 'ChatController@check_new_data_exist');
+        });
+});
 
+Route::middleware('auth:web')->group(function () {
+        /** Abonnements conducteurs */
+        Route::group(['prefix' => 'subscriptions', 'namespace' => 'Admin'], function () {
+            Route::get('/', 'DriverSubscriptionController@index');
+            Route::post('/store', 'DriverSubscriptionController@store');
+            Route::post('/suspend/{driverId}', 'DriverSubscriptionController@suspend');
         });
 });

@@ -42,5 +42,8 @@ class DriverSubscription extends Model
         'converted_expired_at'
     ];
 
-    
+    public function driver()
+    {
+        return $this->belongsTo(\App\Models\Admin\Driver::class, 'driver_id', 'id');
+    }
 }

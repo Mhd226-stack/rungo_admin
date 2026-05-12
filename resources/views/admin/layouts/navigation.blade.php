@@ -333,6 +333,9 @@ if(str_contains((string)request()->path(),'translations')){
               <a href="{{url('withdrawal-requests-lists/negative_balance_drivers')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.negative_balance_drivers')</a>
             </li>
             @endif
+            <li class="{{ 'subscriptions' == $sub_menu ? 'active' : '' }}">
+              <a href="{{url('/subscriptions')}}"><i class="fa fa-id-card"></i> Abonnements</a>
+            </li>
           </ul>
 
         </li>

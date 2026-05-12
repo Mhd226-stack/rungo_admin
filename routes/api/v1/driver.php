@@ -37,6 +37,8 @@ Route::prefix('driver')->namespace('Driver')->middleware('auth')->group(function
 
         Route::get('leader-board/trips','EarningsController@leaderBoardTrips');
         Route::get('leader-board/earnings','EarningsController@leaderBoardEarnings');
-        
+
+        // Abonnement conducteur
+        Route::get('subscription/status', 'DriverSubscriptionController@getStatus');
     });
 });
