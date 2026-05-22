@@ -21,3 +21,7 @@ yarn-error.log
 "storage/logs/" 
 "tyt_tagxi.xlsx" 
 "storage/logs/laravel.log" 
+
+# Logs
+storage/logs/
+*.log
