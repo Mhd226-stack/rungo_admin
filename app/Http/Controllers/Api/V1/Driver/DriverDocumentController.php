@@ -238,8 +238,8 @@ class DriverDocumentController extends BaseController
 
        $user = auth()->user();
 
-            $title = trans('push_notifications.driver_approved',[],$user->lang);
-            $body = trans('push_notifications.driver_approved_body',[],$user->lang);
+            $title = trans('push_notifications.driver_approved',[],'fr');
+            $body = trans('push_notifications.driver_approved_body',[],'fr');
             $push_data = ['notification_enum'=>PushEnums::DRIVER_ACCOUNT_APPROVED];
             $socket_success_message = PushEnums::DRIVER_ACCOUNT_APPROVED;
 

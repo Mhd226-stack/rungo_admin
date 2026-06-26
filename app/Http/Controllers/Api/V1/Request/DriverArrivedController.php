@@ -50,8 +50,8 @@ class DriverArrivedController extends BaseController
         }
         // Send Push notification to the user
         $user = User::find($request_detail->user_id);
-        $title = trans('push_notifications.driver_arrived_title',[],$user->lang);
-        $body = trans('push_notifications.driver_arrived_body',[],$user->lang);
+        $title = trans('push_notifications.driver_arrived_title',[],'fr');
+        $body = trans('push_notifications.driver_arrived_body',[],'fr');
 
         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('driverDetail');
 

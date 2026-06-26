@@ -187,8 +187,8 @@ class StripeController extends ApiController
                 $socket_data->success_message  = PushEnums::AMOUNT_CREDITED;
                 $socket_data->result = $request->all();
 
-                $title = trans('push_notifications.amount_credited_to_your_wallet_title',[],$user->lang);
-                $body = trans('push_notifications.amount_credited_to_your_wallet_body',[],$user->lang);
+                $title = trans('push_notifications.amount_credited_to_your_wallet_title',[],'fr');
+                $body = trans('push_notifications.amount_credited_to_your_wallet_body',[],'fr');
 
                 // dispatch(new NotifyViaMqtt('add_money_to_wallet_status'.$user_id, json_encode($socket_data), $user_id));
                 
@@ -250,8 +250,8 @@ class StripeController extends ApiController
 
         $this->database->getReference('requests/'.$request_detail->id)->update(['is_paid'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
-        $title = trans('push_notifications.payment_completed_by_user_title',[],$driver->user->lang);
-        $body = trans('push_notifications.payment_completed_by_user_body',[],$driver->user->lang);
+        $title = trans('push_notifications.payment_completed_by_user_title',[],'fr');
+        $body = trans('push_notifications.payment_completed_by_user_body',[],'fr');
 
         dispatch(new SendPushNotification($driver->user,$title,$body));
 

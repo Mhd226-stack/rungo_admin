@@ -131,8 +131,8 @@ class FleetController extends BaseController
 
             $notifable_driver = $fleet_driver->user;
 
-            $title = trans('push_notifications.fleet_removed_from_your_account_title',[],$notifable_driver->lang);
-            $body = trans('push_notifications.fleet_removed_from_your_account_body',[],$notifable_driver->lang);
+            $title = trans('push_notifications.fleet_removed_from_your_account_title',[],'fr');
+            $body = trans('push_notifications.fleet_removed_from_your_account_body',[],'fr');
 
             dispatch(new SendPushNotification($notifable_driver,$title,$body));
 
@@ -164,8 +164,8 @@ class FleetController extends BaseController
 
         $notifable_driver = $driver->user;
 
-        $title = trans('push_notifications.new_fleet_assigned_title',[],$notifable_driver->lang);
-        $body = trans('push_notifications.new_fleet_assigned_body',[],$notifable_driver->lang);
+        $title = trans('push_notifications.new_fleet_assigned_title',[],'fr');
+        $body = trans('push_notifications.new_fleet_assigned_body',[],'fr');
 
 
         dispatch(new SendPushNotification($notifable_driver,$title,$body));

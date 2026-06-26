@@ -140,13 +140,13 @@ class FleetDocumentController extends BaseController
 
         $user = User::find($fleet->user_id);
         if ($status) {
-            $title = trans('push_notifications.fleet_approved',[],$user->lang);
-            $body = trans('push_notifications.fleet_approved_body',[],$user->lang);
+            $title = trans('push_notifications.fleet_approved',[],'fr');
+            $body = trans('push_notifications.fleet_approved_body',[],'fr');
             $push_data = ['notification_enum'=>PushEnums::FLEET_ACCOUNT_APPROVED];
             $socket_success_message = PushEnums::FLEET_ACCOUNT_APPROVED;
         } else {
-            $title = trans('push_notifications.fleet_declined_title',[],$user->lang);
-            $body = trans('push_notifications.fleet_declined_body',[],$user->lang);
+            $title = trans('push_notifications.fleet_declined_title',[],'fr');
+            $body = trans('push_notifications.fleet_declined_body',[],'fr');
             $push_data = ['notification_enum'=>PushEnums::FLEET_ACCOUNT_DECLINED];
             $socket_success_message = PushEnums::FLEET_ACCOUNT_DECLINED;
         }

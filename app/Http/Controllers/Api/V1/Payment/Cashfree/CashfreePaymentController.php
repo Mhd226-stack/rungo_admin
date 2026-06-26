@@ -240,8 +240,8 @@ class CashfreePaymentController extends ApiController
                 $socket_data->success_message  = PushEnums::AMOUNT_CREDITED;
                 $socket_data->result = $request->all();
 
-                $title = trans('push_notifications.amount_credited_to_your_wallet_title',[],$user->lang);
-                $body = trans('push_notifications.amount_credited_to_your_wallet_body',[],$user->lang);
+                $title = trans('push_notifications.amount_credited_to_your_wallet_title',[],'fr');
+                $body = trans('push_notifications.amount_credited_to_your_wallet_body',[],'fr');
 
                 // dispatch(new NotifyViaMqtt('add_money_to_wallet_status'.$user_id, json_encode($socket_data), $user_id));
                 dispatch(new SendPushNotification($user,$title,$body));
@@ -267,8 +267,8 @@ class CashfreePaymentController extends ApiController
                     $socket_data->success_message  = PushEnums::CARD_TO_WALLET_TRANSACTION_FAILED;
                     $socket_data->result = $request->all();
 
-                    $title = trans('push_notifications.transaction_failed_title',[],$user->lang);
-                    $body = trans('push_notifications.transaction_failed_body',[],$user->lang);
+                    $title = trans('push_notifications.transaction_failed_title',[],'fr');
+                    $body = trans('push_notifications.transaction_failed_body',[],'fr');
 
                     // dispatch(new NotifyViaMqtt('add_money_to_wallet_status'.$user_id, json_encode($socket_data), $user_id));
                     dispatch(new SendPushNotification($user,$title,$body));

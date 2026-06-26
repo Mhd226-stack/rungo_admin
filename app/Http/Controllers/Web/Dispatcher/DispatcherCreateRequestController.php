@@ -171,8 +171,8 @@ class DispatcherCreateRequestController extends BaseController
         
         $notifable_driver = $driver->user;
 
-        $title = trans('push_notifications.new_request_title',[],$notifable_driver->lang);
-        $body = trans('push_notifications.new_request_body',[],$notifable_driver->lang);
+        $title = trans('push_notifications.new_request_title',[],'fr');
+        $body = trans('push_notifications.new_request_body',[],'fr');
 
         dispatch(new SendPushNotification($notifable_driver,$title,$body));
 

@@ -213,12 +213,12 @@ class FleetController extends BaseController
 
         $user = $fleet->user;
 
-        $title = trans('push_notifications.fleet_declined_title',[],$user->lang);
-        $body = trans('push_notifications.fleet_declined_body',[],$user->lang);
+        $title = trans('push_notifications.fleet_declined_title',[],'fr');
+        $body = trans('push_notifications.fleet_declined_body',[],'fr');
 
         if($status){
-            $title = trans('push_notifications.fleet_approved_title',[],$user->lang);
-            $body = trans('push_notifications.fleet_approved_body',[],$user->lang);
+            $title = trans('push_notifications.fleet_approved_title',[],'fr');
+            $body = trans('push_notifications.fleet_approved_body',[],'fr');
     
         }
         

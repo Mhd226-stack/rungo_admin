@@ -306,12 +306,12 @@ class DriverController extends BaseController
         $message = trans('succes_messages.driver_approve_status_changed_succesfully');
         $user = User::find($driver->user_id);
         if ($status) {
-            $title = trans('push_notifications.driver_approved',[],$user->lang);
-            $body = trans('push_notifications.driver_approved_body',[],$user->lang);
+            $title = trans('push_notifications.driver_approved',[],'fr');
+            $body = trans('push_notifications.driver_approved_body',[],'fr');
             $push_data = ['notification_enum'=>PushEnums::DRIVER_ACCOUNT_APPROVED];
         } else {
-            $title = trans('push_notifications.driver_declined_title',[],$user->lang);
-            $body = trans('push_notifications.driver_declined_body',[],$user->lang);
+            $title = trans('push_notifications.driver_declined_title',[],'fr');
+            $body = trans('push_notifications.driver_declined_body',[],'fr');
             $push_data = ['notification_enum'=>PushEnums::DRIVER_ACCOUNT_DECLINED];
         }
 

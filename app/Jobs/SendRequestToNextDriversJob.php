@@ -68,8 +68,8 @@ class SendRequestToNextDriversJob implements ShouldQueue
 
                 $notifiable_driver = $request_meta_detail->driver->user;
 
-                $title = trans('push_notifications.new_request_title',[],$notifiable_driver->lang);
-                $body = trans('push_notifications.new_request_body',[],$notifiable_driver->lang);
+                $title = trans('push_notifications.new_request_title',[],'fr');
+                $body = trans('push_notifications.new_request_body',[],'fr');
 
                 dispatch(new SendPushNotification($notifiable_driver,$title,$body));
             }

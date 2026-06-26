@@ -63,8 +63,8 @@ class NotifyDriverDocumentExpiry extends Command
 
                     $notifable_driver = $doc->driver->user;
 
-                    $title = trans('push_notifications.document_expired_title',[],$notifable_driver->lang);
-                    $body = trans('push_notifications.document_expired_body',[],$notifable_driver->lang);
+                    $title = trans('push_notifications.document_expired_title',[],'fr');
+                    $body = trans('push_notifications.document_expired_body',[],'fr');
 
                     dispatch(new SendPushNotification($notifable_driver,$title,$body));
 

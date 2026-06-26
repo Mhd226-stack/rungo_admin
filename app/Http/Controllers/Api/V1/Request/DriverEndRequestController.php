@@ -385,8 +385,8 @@ class DriverEndRequestController extends BaseController
         }
         // Send Push notification to the user
         $user = $request_detail->userDetail;
-        $title = trans('push_notifications.trip_completed_title',[],$user->lang);
-        $body = trans('push_notifications.trip_completed_body',[],$user->lang);
+        $title = trans('push_notifications.trip_completed_title',[],'fr');
+        $body = trans('push_notifications.trip_completed_body',[],'fr');
 
 
         $pus_request_detail = $request_result->toJson();

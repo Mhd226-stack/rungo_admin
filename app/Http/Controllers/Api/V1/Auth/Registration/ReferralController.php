@@ -93,8 +93,8 @@ class ReferralController extends BaseController
         }
         
         // Notify user
-        $title = trans('push_notifications.referral_earnings_notify_title',[],$reffered_user->lang);
-        $body = trans('push_notifications.referral_earnings_notify_body',[],$reffered_user->lang);
+        $title = trans('push_notifications.referral_earnings_notify_title',[],'fr');
+        $body = trans('push_notifications.referral_earnings_notify_body',[],'fr');
 
         dispatch(new SendPushNotification($reffered_user,$title,$body));
 
@@ -160,8 +160,8 @@ class ReferralController extends BaseController
         }
         
         // Notify user
-         $title = trans('push_notifications.referral_earnings_notify_title',[],$reffered_user->lang);
-        $body = trans('push_notifications.referral_earnings_notify_body',[],$reffered_user->lang);
+         $title = trans('push_notifications.referral_earnings_notify_title',[],'fr');
+        $body = trans('push_notifications.referral_earnings_notify_body',[],'fr');
 
         dispatch(new SendPushNotification($reffered_user->user,$title,$body));
 

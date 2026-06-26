@@ -156,8 +156,8 @@ class UserCancelRequestController extends BaseController
             $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
 
             $push_request_detail = $request_result->toJson();
-            $title = trans('push_notifications.trip_cancelled_by_user_title',[],$notifiable_driver->lang);
-            $body = trans('push_notifications.trip_cancelled_by_user_body',[],$notifiable_driver->lang);
+            $title = trans('push_notifications.trip_cancelled_by_user_title',[],'fr');
+            $body = trans('push_notifications.trip_cancelled_by_user_body',[],'fr');
 
             $push_data = ['success'=>true,'success_message'=>PushEnums::REQUEST_CANCELLED_BY_USER,'result'=>(string)$push_request_detail];
 

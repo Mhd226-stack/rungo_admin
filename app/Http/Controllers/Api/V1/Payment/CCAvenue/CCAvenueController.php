@@ -190,8 +190,8 @@ $order_status = $responseMap['order_status'];
             'is_credit'=>true]);
 
 
-            $title = trans('push_notifications.amount_credited_to_your_wallet_title',[],$user->lang);
-            $body = trans('push_notifications.amount_credited_to_your_wallet_body',[],$user->lang);
+            $title = trans('push_notifications.amount_credited_to_your_wallet_title',[],'fr');
+            $body = trans('push_notifications.amount_credited_to_your_wallet_body',[],'fr');
 
 
             // dispatch(new SendPushNotification($user,$title,$body));
@@ -245,8 +245,8 @@ $order_status = $responseMap['order_status'];
 
         $this->database->getReference('requests/'.$request_detail->id)->update(['is_paid'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
-        $title = trans('push_notifications.payment_completed_by_user_title',[],$driver->user->lang);
-        $body = trans('push_notifications.payment_completed_by_user_body',[],$driver->user->lang);
+        $title = trans('push_notifications.payment_completed_by_user_title',[],'fr');
+        $body = trans('push_notifications.payment_completed_by_user_body',[],'fr');
 
         dispatch(new SendPushNotification($driver->user,$title,$body));
 

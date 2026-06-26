@@ -148,8 +148,8 @@ class DriverCancelRequestController extends BaseController
             $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('driverDetail');
 
             $push_request_detail = $request_result->toJson();
-            $title = trans('push_notifications.trip_cancelled_by_driver_title',[],$user->lang);
-            $body = trans('push_notifications.trip_cancelled_by_driver_body',[],$user->lang);
+            $title = trans('push_notifications.trip_cancelled_by_driver_title',[],'fr');
+            $body = trans('push_notifications.trip_cancelled_by_driver_body',[],'fr');
 
             $push_data = ['success'=>true,'success_message'=>PushEnums::REQUEST_CANCELLED_BY_DRIVER,'result'=>(string)$push_request_detail];
 

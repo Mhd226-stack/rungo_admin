@@ -156,9 +156,9 @@ class ComplaintController extends Controller
             $user = Owner::whereId($complaint->owner_id)->first()->user;
         }
 
-        $title = trans('push_notifications.complaint_taken_title',[],$user->lang);
+        $title = trans('push_notifications.complaint_taken_title',[],'fr');
 
-        $body = trans('push_notifications.complaint_taken_body',[],$user->lang);
+        $body = trans('push_notifications.complaint_taken_body',[],'fr');
 
         $push_data = ['notification_enum'=>PushEnums::COMPLAINT_TAKEN];
 
@@ -184,8 +184,8 @@ class ComplaintController extends Controller
             $user = Owner::whereId($complaint->owner_id)->first()->user;
         }
 
-        $title = trans('push_notifications.complaint_solved_title',[],$user->lang);
-        $body = trans('push_notifications.complaint_solved_body',[],$user->lang);
+        $title = trans('push_notifications.complaint_solved_title',[],'fr');
+        $body = trans('push_notifications.complaint_solved_body',[],'fr');
 
         $push_data = ['notification_enum'=>PushEnums::COMPLAINT_SOLVED];
 

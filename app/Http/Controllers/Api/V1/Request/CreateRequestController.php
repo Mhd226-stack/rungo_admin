@@ -403,8 +403,8 @@ class CreateRequestController extends BaseController
 
         $notifable_driver = $driver->user;
 
-        $title = trans('push_notifications.ride_confirmed_by_user_title',[],$notifable_driver->lang);
-        $body = trans('push_notifications.ride_confirmed_by_user_body',[],$notifable_driver->lang);
+        $title = trans('push_notifications.ride_confirmed_by_user_title',[],'fr');
+        $body = trans('push_notifications.ride_confirmed_by_user_body',[],'fr');
 
         dispatch(new SendPushNotification($notifable_driver,$title,$body));
 

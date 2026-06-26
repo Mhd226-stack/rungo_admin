@@ -72,8 +72,8 @@ class OfflineUnAvailableDrivers extends Command
 
                 if ($mysql_driver){
                     $notifable_driver = $mysql_driver->user;
-                    $title = trans('push_notifications.reminder_push_title',[],$notifable_driver->lang);
-                    $body = trans('push_notifications.reminder_push_body',[],$notifable_driver->lang);
+                    $title = trans('push_notifications.reminder_push_title',[],'fr');
+                    $body = trans('push_notifications.reminder_push_body',[],'fr');
 
                     dispatch(new SendPushNotification($notifable_driver,$title,$body));
 

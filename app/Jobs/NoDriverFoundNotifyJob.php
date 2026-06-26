@@ -51,8 +51,8 @@ class NoDriverFoundNotifyJob implements ShouldQueue
             if ($request_detail->userDetail()->exists() && $request_detail->userDetail->fcm_token) {
                 $user = $request_detail->userDetail;
 
-                $title = trans('push_notifications.no_driver_found_title',[],$user->lang);
-                $body = trans('push_notifications.no_driver_found_body',[],$user->lang);
+                $title = trans('push_notifications.no_driver_found_title',[],'fr');
+                $body = trans('push_notifications.no_driver_found_body',[],'fr');
 
                 // $socket_data = new \stdClass();
                 // $socket_data->success = true;
